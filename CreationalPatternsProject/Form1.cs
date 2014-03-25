@@ -21,11 +21,11 @@ namespace CreationalPatternsProject
         {
             if (greatBritanRadioButton.Checked)
             {
-                MenuCombinations.Instance.Country = greatBritanRadioButton.Text;
+                MenuCombinations.Instance.Country = greatBritanRadioButton.Tag.ToString();
             }
             else
             {
-                MenuCombinations.Instance.Country = unitedStatesRadioButton.Text;
+                MenuCombinations.Instance.Country = unitedStatesRadioButton.Tag.ToString();
             }
 
             if (dinerRadioButton.Checked)
@@ -62,7 +62,7 @@ namespace CreationalPatternsProject
             IMenuGenerator generator = menuFactory.getGenerator(MenuCombinations.Instance.RestaurantCategory);
             IMenuFormatter formatter = menuFormatterFactory.getFormatter(MenuCombinations.Instance.MenuFormat);
 
-            var menuFileName = formatter.generateMenu(generator.generateMenuItems(reader.readFile()));      
+            var menuFileName = formatter.generateMenu(generator.generateMenuItems(reader.readFile(), MenuCombinations.Instance.Country));      
 
             MessageBox.Show(menuFileName);
         }

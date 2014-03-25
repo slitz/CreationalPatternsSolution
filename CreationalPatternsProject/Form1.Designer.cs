@@ -66,6 +66,7 @@
             this.unitedStatesRadioButton.Size = new System.Drawing.Size(113, 22);
             this.unitedStatesRadioButton.TabIndex = 1;
             this.unitedStatesRadioButton.TabStop = true;
+            this.unitedStatesRadioButton.Tag = "US";
             this.unitedStatesRadioButton.Text = "United States";
             this.unitedStatesRadioButton.UseVisualStyleBackColor = true;
             // 
@@ -78,6 +79,7 @@
             this.greatBritanRadioButton.Size = new System.Drawing.Size(104, 22);
             this.greatBritanRadioButton.TabIndex = 0;
             this.greatBritanRadioButton.TabStop = true;
+            this.greatBritanRadioButton.Tag = "GB";
             this.greatBritanRadioButton.Text = "Great Britan";
             this.greatBritanRadioButton.UseVisualStyleBackColor = true;
             // 

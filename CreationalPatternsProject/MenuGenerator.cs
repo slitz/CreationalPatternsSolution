@@ -35,12 +35,12 @@ namespace CreationalPatternsProject
 
     public interface IMenuGenerator
     {
-        string generateMenuItems(XDocument foodItems);
+        string generateMenuItems(XDocument foodItems, string country);
     }
 
     public class DinerMenuGenerator : IMenuGenerator
     {
-        public string generateMenuItems(XDocument foodItems)
+        public string generateMenuItems(XDocument foodItems, string country)
         {
             string output = string.Empty;
 
@@ -51,9 +51,12 @@ namespace CreationalPatternsProject
             {
                 for (int x = 0; x < dinerItemsArray.Length; x++)
                 {
-                    if (e.Element("category").Value == dinerItemsArray[x].ToString())
+                    if (e.Element("country").Value == country)
                     {
-                        output += e.ToString() + "\n";
+                        if (e.Element("category").Value == dinerItemsArray[x].ToString())
+                        {
+                            output += e.ToString() + "\n";
+                        }
                     }
                 }
             }
@@ -64,7 +67,7 @@ namespace CreationalPatternsProject
 
     public class EveningOnlyMenuGenerator: IMenuGenerator
     {
-        public string generateMenuItems(XDocument foodItems)
+        public string generateMenuItems(XDocument foodItems, string country)
         {
             string output = string.Empty;
 
@@ -75,9 +78,12 @@ namespace CreationalPatternsProject
             {
                 for (int x = 0; x < eveningOnlyItemsArray.Length; x++)
                 {
-                    if (e.Element("category").Value == eveningOnlyItemsArray[x].ToString())
+                    if (e.Element("country").Value == country)
                     {
-                        output += e.ToString() + "\n";
+                        if (e.Element("category").Value == eveningOnlyItemsArray[x].ToString())
+                        {
+                            output += e.ToString() + "\n";
+                        }
                     }
                 }
             }
@@ -88,7 +94,7 @@ namespace CreationalPatternsProject
 
     public class AllDayMenuGenerator : IMenuGenerator
     {
-        public string generateMenuItems(XDocument foodItems)
+        public string generateMenuItems(XDocument foodItems, string country)
         {
             string output = string.Empty;
 
@@ -99,9 +105,12 @@ namespace CreationalPatternsProject
             {
                 for (int x = 0; x < allDayItemsArray.Length; x++)
                 {
-                    if (e.Element("category").Value == allDayItemsArray[x].ToString())
+                    if (e.Element("country").Value == country)
                     {
-                        output += e.ToString() + "\n";
+                        if (e.Element("category").Value == allDayItemsArray[x].ToString())
+                        {
+                            output += e.ToString() + "\n";
+                        }
                     }
                 }
             }

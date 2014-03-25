@@ -24,8 +24,8 @@ namespace CreationalPatternsProject
 
     public enum Country
     {
-        GreatBritan,
-        UnitedStates
+        GB,
+        US
     }
 
     public enum RestaurantCategory

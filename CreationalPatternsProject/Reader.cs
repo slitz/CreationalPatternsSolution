@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace CreationalPatternsProject
@@ -18,7 +19,7 @@ namespace CreationalPatternsProject
     {
         public override IReader getReader(string country)
         {
-            if (country == "Great Britan")
+            if (country == "GB")
             {
                 return new XReader();
             }
@@ -68,6 +69,14 @@ namespace CreationalPatternsProject
         public XDocument readFile()
         {
             xDoc = XDocument.Load(xmlPath);
+
+            // Add new node for country so the IMenuGenerator classes have common elements to work with 
+            var elements = xDoc.Root.Elements("FoodItem");
+            foreach (XElement e in elements)
+            {
+                string c = e.Attribute("country").Value;
+                e.Add(new XElement("country", c));
+            }
 
             return xDoc;
         }
