@@ -32,7 +32,7 @@ namespace CreationalPatternsProject
 
     public interface IReader
     {  
-        XDocument readFile();
+        XDocument readFile(string currency);
     }
 
     public class JReader : IReader
@@ -40,7 +40,7 @@ namespace CreationalPatternsProject
         string jsonPath = @"../../InputFiles/FoodItemData.json";
         XDocument xDoc;
 
-        public XDocument readFile()
+        public XDocument readFile(string currency)
         {
             using (StreamReader r = new StreamReader(jsonPath))
             {
@@ -54,6 +54,7 @@ namespace CreationalPatternsProject
                 foreach (XElement e in elements)
                 {
                     e.Name = "FoodItem";
+                    e.Add(new XElement("currencycode", currency));
                 }
                 
                 return xDoc;
@@ -66,7 +67,7 @@ namespace CreationalPatternsProject
         string xmlPath = @"../../InputFiles/FoodItemData.xml";
         XDocument xDoc;
 
-        public XDocument readFile()
+        public XDocument readFile(string currency)
         {
             xDoc = XDocument.Load(xmlPath);
 
@@ -76,6 +77,7 @@ namespace CreationalPatternsProject
             {
                 string c = e.Attribute("country").Value;
                 e.Add(new XElement("country", c));
+                e.Add(new XElement("currencycode", currency));
             }
 
             return xDoc;

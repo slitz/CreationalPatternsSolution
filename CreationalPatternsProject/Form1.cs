@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,10 +23,12 @@ namespace CreationalPatternsProject
             if (greatBritanRadioButton.Checked)
             {
                 MenuCombinations.Instance.Country = greatBritanRadioButton.Tag.ToString();
+                MenuCombinations.Instance.CurrencyCode = "GBP";
             }
             else
             {
                 MenuCombinations.Instance.Country = unitedStatesRadioButton.Tag.ToString();
+                MenuCombinations.Instance.CurrencyCode = "$";
             }
 
             if (dinerRadioButton.Checked)
@@ -54,6 +57,9 @@ namespace CreationalPatternsProject
                 MenuCombinations.Instance.MenuFormat = xmlRadioButton.Text;
             }
 
+            // Create output directory if it does not exist
+            Directory.CreateDirectory("../../OutputFiles/");
+            
             IReaderFactory readerFactory = new ReaderFactory();
             IMenuGeneratorFactory menuFactory = new MenuGeneratorFactory();
             IMenuFormatterFactory menuFormatterFactory = new MenuFormatterFactory();
@@ -62,7 +68,7 @@ namespace CreationalPatternsProject
             IMenuGenerator generator = menuFactory.getGenerator(MenuCombinations.Instance.RestaurantCategory);
             IMenuFormatter formatter = menuFormatterFactory.getFormatter(MenuCombinations.Instance.MenuFormat);
 
-            var menuFileName = formatter.generateMenu(generator.generateMenuItems(reader.readFile(), MenuCombinations.Instance.Country));      
+            var menuFileName = formatter.generateMenu(generator.generateMenuItems(reader.readFile(MenuCombinations.Instance.CurrencyCode), MenuCombinations.Instance.Country));      
 
             MessageBox.Show(menuFileName);
         }

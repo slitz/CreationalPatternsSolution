@@ -57,6 +57,7 @@ namespace CreationalPatternsProject
     public sealed class MenuCombinations
     {
         private string _Country;
+        private string _CurrencyCode;
         private string _RestaurantCategory;
         private string _MenuFormat;
         private static volatile MenuCombinations instance;
@@ -85,6 +86,12 @@ namespace CreationalPatternsProject
         {
             get { return _Country; }
             set { _Country = value; }
+        }
+
+        public string CurrencyCode
+        {
+            get { return _CurrencyCode; }
+            set { _CurrencyCode = value; }
         }
 
         public string RestaurantCategory
