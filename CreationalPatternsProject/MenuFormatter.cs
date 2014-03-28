@@ -9,12 +9,12 @@ using System.Xml.Linq;
 
 namespace CreationalPatternsProject
 {
-    abstract class IMenuFormatterFactory
+    public abstract class IMenuFormatterFactory
     {
         public abstract IMenuFormatter getFormatter(string menuFormat);
     }
 
-    class MenuFormatterFactory : IMenuFormatterFactory
+    public class MenuFormatterFactory : IMenuFormatterFactory
     {
         public override IMenuFormatter getFormatter(string menuFormat)
         {

@@ -59,18 +59,23 @@ namespace CreationalPatternsProject
 
             // Create output directory if it does not exist
             Directory.CreateDirectory("../../OutputFiles/");
+
+            RestaurantAbstractFactory absFactory = RestaurantTypeFactoryMaker.getFactory(MenuCombinations.Instance.Country, MenuCombinations.Instance.RestaurantCategory, MenuCombinations.Instance.MenuFormat);
+
+            //IReaderFactory readerFactory = new ReaderFactory();
+            //IMenuGeneratorFactory menuFactory = new MenuGeneratorFactory();
+            //IMenuFormatterFactory menuFormatterFactory = new MenuFormatterFactory();
+
+            //IReader reader = readerFactory.getReader(MenuCombinations.Instance.Country);
+            //IMenuGenerator generator = menuFactory.getGenerator(MenuCombinations.Instance.RestaurantCategory);
+            //IReader reader = absFactory.createReader();
             
-            IReaderFactory readerFactory = new ReaderFactory();
-            IMenuGeneratorFactory menuFactory = new MenuGeneratorFactory();
-            IMenuFormatterFactory menuFormatterFactory = new MenuFormatterFactory();
+            IMenuFormatter formatter = absFactory.createMenuFormatter();
 
-            IReader reader = readerFactory.getReader(MenuCombinations.Instance.Country);
-            IMenuGenerator generator = menuFactory.getGenerator(MenuCombinations.Instance.RestaurantCategory);
-            IMenuFormatter formatter = menuFormatterFactory.getFormatter(MenuCombinations.Instance.MenuFormat);
-
-            var menuFileName = formatter.generateMenu(generator.generateMenuItems(reader.readFile(MenuCombinations.Instance.CurrencyCode), MenuCombinations.Instance.Country));      
+            var menuFileName = formatter.generateMenu(absFactory.createMenuGenerator().generateMenuItems(absFactory.createReader().readFile(MenuCombinations.Instance.CurrencyCode), MenuCombinations.Instance.Country));
 
             MessageBox.Show(menuFileName);
+            
         }
     }
 }

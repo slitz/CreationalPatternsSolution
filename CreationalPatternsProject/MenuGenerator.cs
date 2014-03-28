@@ -9,12 +9,12 @@ using System.Xml.Linq;
 
 namespace CreationalPatternsProject
 {
-    abstract class IMenuGeneratorFactory
+    public abstract class IMenuGeneratorFactory
     {
         public abstract IMenuGenerator getGenerator(string restaurantCatgory);
     }
 
-    class MenuGeneratorFactory : IMenuGeneratorFactory
+    public class MenuGeneratorFactory : IMenuGeneratorFactory
     {
         public override IMenuGenerator getGenerator(string restaurantCategory)
         {

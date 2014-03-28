@@ -10,12 +10,12 @@ using System.Xml.Linq;
 
 namespace CreationalPatternsProject
 {
-    abstract class IReaderFactory
+    public abstract class IReaderFactory
     {
         public abstract IReader getReader(string country);
     }
 
-    class ReaderFactory : IReaderFactory
+    public class ReaderFactory : IReaderFactory
     {
         public override IReader getReader(string country)
         {
