@@ -232,14 +232,110 @@ namespace CreationalPatternsProject
     {
         string outputPath = @"../../OutputFiles/";
         string fileName = DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".xml";
+
         public string generateMenu(string menu)
         {
             XmlDocument xml = new XmlDocument();
             xml.LoadXml("<root>" + menu + "</root>");
-            
+            XmlNodeList nodes = xml.SelectNodes("/root/FoodItem");
+
+            XmlDocument newXml = new XmlDocument();
+            XmlElement root = newXml.CreateElement("MenuItems");
+            XmlElement breakfast = newXml.CreateElement("FoodItemCategory");
+            breakfast.SetAttribute("category", FoodItemCategory.Breakfast.ToString().ToUpper());
+            XmlElement snack = newXml.CreateElement("FoodItemCategory");
+            snack.SetAttribute("category", FoodItemCategory.Snack.ToString().ToUpper());
+            XmlElement appetizer = newXml.CreateElement("FoodItemCategory");
+            appetizer.SetAttribute("category", FoodItemCategory.Appetizer.ToString().ToUpper());
+            XmlElement lunch = newXml.CreateElement("FoodItemCategory");
+            lunch.SetAttribute("category", FoodItemCategory.Lunch.ToString().ToUpper());
+            XmlElement dinner = newXml.CreateElement("FoodItemCategory");
+            dinner.SetAttribute("category", FoodItemCategory.Dinner.ToString().ToUpper());
+            XmlElement dessert = newXml.CreateElement("FoodItemCategory");
+            dessert.SetAttribute("category", FoodItemCategory.Dessert.ToString().ToUpper());
+            XmlElement side = newXml.CreateElement("FoodItemCategory");
+            side.SetAttribute("category", FoodItemCategory.Side.ToString().ToUpper());
+
+            newXml.AppendChild(root);
+
+            foreach (XmlNode node in nodes)
+            {
+                string name = node["name"].InnerText;
+                string description = node["description"].InnerText;
+                string price = node["price"].InnerText;
+                string category = node["category"].InnerText;
+                string currencyCode = node["currencycode"].InnerText;
+
+                if (node["category"].InnerText == FoodItemCategory.Breakfast.ToString())
+                {
+                    XmlNode menuItem = newXml.CreateNode(XmlNodeType.Element, "MenuItem", null);
+                    breakfast.AppendChild(menuItem);
+                    
+                }
+                else if (node["category"].InnerText == FoodItemCategory.Snack.ToString())
+                {
+                    XmlNode menuItem = newXml.CreateNode(XmlNodeType.Element, "MenuItem", null);
+                    snack.AppendChild(menuItem);
+                }
+                else if (node["category"].InnerText == FoodItemCategory.Appetizer.ToString())
+                {
+                    XmlNode menuItem = newXml.CreateNode(XmlNodeType.Element, "MenuItem", null);
+                    appetizer.AppendChild(menuItem);
+                }
+                else if (node["category"].InnerText == FoodItemCategory.Lunch.ToString())
+                {
+                    XmlNode menuItem = newXml.CreateNode(XmlNodeType.Element, "MenuItem", null);
+                    lunch.AppendChild(menuItem);
+                }
+                else if (node["category"].InnerText == FoodItemCategory.Dinner.ToString())
+                {
+                    XmlNode menuItem = newXml.CreateNode(XmlNodeType.Element, "MenuItem", null);
+                    dinner.AppendChild(menuItem);
+                }
+                else if (node["category"].InnerText == FoodItemCategory.Dessert.ToString())
+                {
+                    XmlNode menuItem = newXml.CreateNode(XmlNodeType.Element, "MenuItem", null);
+                    dessert.AppendChild(menuItem);
+                }
+                else
+                {
+                    XmlNode menuItem = newXml.CreateNode(XmlNodeType.Element, "MenuItem", null);
+                    side.AppendChild(menuItem);
+                }
+            }
+
+            if (breakfast.HasChildNodes)
+            {
+                root.AppendChild(breakfast);
+            }
+            if (snack.HasChildNodes)
+            {
+                root.AppendChild(snack);
+            }
+            if (appetizer.HasChildNodes)
+            {
+                root.AppendChild(appetizer);
+            }
+            if (lunch.HasChildNodes)
+            {
+                root.AppendChild(lunch);
+            }
+            if (dinner.HasChildNodes)
+            {
+                root.AppendChild(dinner);
+            }
+            if (dessert.HasChildNodes)
+            {
+                root.AppendChild(dessert);
+            }
+            if (side.HasChildNodes)
+            {
+                root.AppendChild(side);
+            }
+
             XmlTextWriter writer = new XmlTextWriter(outputPath + fileName, null);
             writer.Formatting = Formatting.Indented;
-            xml.Save(writer);
+            newXml.Save(writer);
             return fileName;
         }
     }
