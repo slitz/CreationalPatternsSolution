@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace CreationalPatternsProject
 {
-    // Singleton
-    public sealed class MenuCombinations
+    // Singleton class to store menu selection
+    public sealed class MenuSelection
     {
         private string _Country;
         private string _CurrencyCode;
         private string _RestaurantCategory;
         private string _MenuFormat;
-        private static volatile MenuCombinations instance;
+        private static volatile MenuSelection instance;
         private static object syncRoot = new Object();
 
-        private MenuCombinations() { }
+        private MenuSelection() { }
 
-        public static MenuCombinations Instance
+        public static MenuSelection Instance
         {
             get
             {
@@ -27,7 +27,7 @@ namespace CreationalPatternsProject
                     lock (syncRoot)
                     {
                         if (instance == null)
-                            instance = new MenuCombinations();
+                            instance = new MenuSelection();
                     }
                 }
 

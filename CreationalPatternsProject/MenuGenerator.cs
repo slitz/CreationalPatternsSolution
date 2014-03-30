@@ -22,7 +22,7 @@ namespace CreationalPatternsProject
             {
                 return new DinerMenuGenerator();
             }
-            else if(restaurantCategory == "Evening Only")
+            else if(restaurantCategory == "EveningOnly")
             {
                 return new EveningOnlyMenuGenerator();
             }

@@ -49,11 +49,11 @@ namespace CreationalPatternsProject
                         switch (format)
                         {
                             case "Text":
-                                return new BritishAllDayTextConcreteRestaurant();
+                                return new BritishEveningTextConcreteRestaurant();
                             case "HTML":
-                                return new BritishAllDayHtmlConcreteRestaurant();
+                                return new BritishEveningHtmlConcreteRestaurant();
                             case "XML":
-                                return new BritishAllDayXmlConcreteRestaurant();
+                                return new BritishEveningXmlConcreteRestaurant();
                         }
                     }
                     return null;
@@ -87,11 +87,11 @@ namespace CreationalPatternsProject
                         switch (format)
                         {
                             case "Text":
-                                return new AmericanAllDayTextConcreteRestaurant();
+                                return new AmericanEveningTextConcreteRestaurant();
                             case "HTML":
-                                return new AmericanAllDayHtmlConcreteRestaurant();
+                                return new AmericanEveningHtmlConcreteRestaurant();
                             case "XML":
-                                return new AmericanAllDayXmlConcreteRestaurant();
+                                return new AmericanEveningXmlConcreteRestaurant();
                         }
                     }
                     return null;

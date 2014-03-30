@@ -55,7 +55,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="MenuCombinations.cs" />
+    <Compile Include="MenuSelection.cs" />
     <Compile Include="MenuFormatter.cs" />
     <Compile Include="MenuGenerator.cs" />
     <Compile Include="Program.cs" />

@@ -105,6 +105,7 @@
             this.allDayRadioButton.Size = new System.Drawing.Size(70, 22);
             this.allDayRadioButton.TabIndex = 2;
             this.allDayRadioButton.TabStop = true;
+            this.allDayRadioButton.Tag = "AllDay";
             this.allDayRadioButton.Text = "All Day";
             this.allDayRadioButton.UseVisualStyleBackColor = true;
             // 
@@ -116,6 +117,7 @@
             this.eveningOnlyRadioButton.Size = new System.Drawing.Size(110, 22);
             this.eveningOnlyRadioButton.TabIndex = 1;
             this.eveningOnlyRadioButton.TabStop = true;
+            this.eveningOnlyRadioButton.Tag = "EveningOnly";
             this.eveningOnlyRadioButton.Text = "Evening Only";
             this.eveningOnlyRadioButton.UseVisualStyleBackColor = true;
             // 
@@ -128,6 +130,7 @@
             this.dinerRadioButton.Size = new System.Drawing.Size(59, 22);
             this.dinerRadioButton.TabIndex = 0;
             this.dinerRadioButton.TabStop = true;
+            this.dinerRadioButton.Tag = "Diner";
             this.dinerRadioButton.Text = "Diner";
             this.dinerRadioButton.UseVisualStyleBackColor = true;
             // 
@@ -185,7 +188,7 @@
             this.generateMenuButton.Name = "generateMenuButton";
             this.generateMenuButton.Size = new System.Drawing.Size(145, 35);
             this.generateMenuButton.TabIndex = 3;
-            this.generateMenuButton.Text = "&Generate Menu";
+            this.generateMenuButton.Text = "&Create Menu";
             this.generateMenuButton.UseVisualStyleBackColor = true;
             this.generateMenuButton.Click += new System.EventHandler(this.generateMenuButton_Click);
             // 

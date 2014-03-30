@@ -42,7 +42,7 @@ namespace CreationalPatternsProject
     {
         public string generateMenu(string menu)
         {
-            string fileName = DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".txt";
+            string fileName = MenuSelection.Instance.Country.ToString() + MenuSelection.Instance.RestaurantCategory.ToString() + "Menu" + ".txt";
             string menuItems = string.Empty;
             string breakfastItems = string.Empty;
             string snackItems = string.Empty;
@@ -51,7 +51,6 @@ namespace CreationalPatternsProject
             string dinnerItems = string.Empty;
             string dessertItems = string.Empty;
             string sideItems = string.Empty;
-            int pad = 95;
 
             XmlDocument xml = new XmlDocument();
             xml.LoadXml("<root>" + menu + "</root>");
@@ -67,61 +66,61 @@ namespace CreationalPatternsProject
 
                 if (node["category"].InnerText == FoodItemCategory.Breakfast.ToString())
                 {
-                    breakfastItems += name.PadRight(pad) + currencyCode + price + "\n" + description + "\n\n";
+                    breakfastItems += addToFoodItem(name, currencyCode, price, description); 
                 }
                 else if (node["category"].InnerText == FoodItemCategory.Snack.ToString())
                 {
-                    snackItems += name.PadRight(pad) + currencyCode + price + "\n" + description + "\n\n";
+                    snackItems += addToFoodItem(name, currencyCode, price, description); 
                 }
                 else if (node["category"].InnerText == FoodItemCategory.Appetizer.ToString())
                 {
-                    appetizerItems += name.PadRight(pad) + currencyCode + price + "\n" + description + "\n\n";
+                    appetizerItems += addToFoodItem(name, currencyCode, price, description); 
                 }
                 else if (node["category"].InnerText == FoodItemCategory.Lunch.ToString())
                 {
-                    lunchItems += name.PadRight(pad) + currencyCode + price + "\n" + description + "\n\n";
+                    lunchItems += addToFoodItem(name, currencyCode, price, description); 
                 }
                 else if (node["category"].InnerText == FoodItemCategory.Dinner.ToString())
                 {
-                    dinnerItems += name.PadRight(pad) + currencyCode + price + "\n" + description + "\n\n";
+                    dinnerItems += addToFoodItem(name, currencyCode, price, description); 
                 }
                 else if (node["category"].InnerText == FoodItemCategory.Dessert.ToString())
                 {
-                    dessertItems += name.PadRight(pad) + currencyCode + price + "\n" + description + "\n\n";
+                    dessertItems += addToFoodItem(name, currencyCode, price, description); 
                 }
                 else
                 {
-                    sideItems += name.PadRight(pad) + currencyCode + price + "\n" + description + "\n\n";
+                    sideItems += addToFoodItem(name, currencyCode, price, description); 
                 }
             }
 
             if (!string.IsNullOrEmpty(breakfastItems))
             {
-                menuItems += FoodItemCategory.Breakfast.ToString().ToUpper() + "\n\n" + breakfastItems;
+                menuItems += addToMenuItems(FoodItemCategory.Breakfast.ToString().ToUpper(), breakfastItems);
             }
             if (!string.IsNullOrEmpty(snackItems))
             {
-                menuItems += FoodItemCategory.Snack.ToString().ToUpper() + "\n\n" + snackItems;
+                menuItems += addToMenuItems(FoodItemCategory.Snack.ToString().ToUpper(), snackItems);
             }
             if (!string.IsNullOrEmpty(appetizerItems))
             {
-                menuItems += FoodItemCategory.Appetizer.ToString().ToUpper() + "\n\n" + appetizerItems;
+                menuItems += addToMenuItems(FoodItemCategory.Appetizer.ToString().ToUpper(), appetizerItems);
             }
             if (!string.IsNullOrEmpty(lunchItems))
             {
-                menuItems += FoodItemCategory.Lunch.ToString().ToUpper() + "\n\n" + lunchItems;
+                menuItems += addToMenuItems(FoodItemCategory.Lunch.ToString().ToUpper(), lunchItems);
             }
             if (!string.IsNullOrEmpty(dinnerItems))
             {
-                menuItems += FoodItemCategory.Dinner.ToString().ToUpper() + "\n\n" + dinnerItems;
+                menuItems += addToMenuItems(FoodItemCategory.Dinner.ToString().ToUpper(), dinnerItems);
             }
             if (!string.IsNullOrEmpty(dessertItems))
             {
-                menuItems += FoodItemCategory.Dessert.ToString().ToUpper() + "\n\n" + dessertItems;
+                menuItems += addToMenuItems(FoodItemCategory.Dessert.ToString().ToUpper(), dessertItems);
             }
             if (!string.IsNullOrEmpty(sideItems))
             {
-                menuItems += FoodItemCategory.Side.ToString().ToUpper() + "\n\n" + sideItems;
+                menuItems += addToMenuItems(FoodItemCategory.Side.ToString().ToUpper(), sideItems);
             }
 
             using (StreamWriter sw = new StreamWriter("../../OutputFiles/" + fileName))
@@ -131,13 +130,26 @@ namespace CreationalPatternsProject
 
             return fileName;
         }
+
+        // Method to add the food items
+        public string addToFoodItem(string name, string currencyCode, string price, string description)
+        {
+            int pad = 95;
+            return name.PadRight(pad) + currencyCode + price + Environment.NewLine + description + Environment.NewLine + Environment.NewLine;
+        }
+
+        // Method to add the food categories
+        public string addToMenuItems(string category, string items)
+        {
+            return category + Environment.NewLine + Environment.NewLine + items;
+        }
     }
 
     public class HtmlMenuFormatter : IMenuFormatter
     {
         public string generateMenu(string menu)
         {
-            string fileName = DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".html";
+            string fileName = MenuSelection.Instance.Country.ToString() + MenuSelection.Instance.RestaurantCategory.ToString() + "Menu" + ".html";
             string menuItems = string.Empty;
             string breakfastItems = string.Empty;
             string snackItems = string.Empty;
@@ -161,61 +173,61 @@ namespace CreationalPatternsProject
 
                 if (node["category"].InnerText == FoodItemCategory.Breakfast.ToString())
                 {
-                    breakfastItems += "<LI>" + name + "<BR>" + "<I>" + description + "</I><BR>" + currencyCode + price + "</LI>";
+                    breakfastItems += addLineItem(name, description, currencyCode, price);
                 }
                 else if (node["category"].InnerText == FoodItemCategory.Snack.ToString())
                 {
-                    snackItems += "<LI>" + name + "<BR>" + "<I>" + description + "</I><BR>" + currencyCode + price + "</LI>";
+                    snackItems += addLineItem(name, description, currencyCode, price);
                 }
                 else if (node["category"].InnerText == FoodItemCategory.Appetizer.ToString())
                 {
-                    appetizerItems += "<LI>" + name + "<BR>" + "<I>" + description + "</I><BR>" + currencyCode + price + "</LI>";
+                    appetizerItems += addLineItem(name, description, currencyCode, price);
                 }
                 else if (node["category"].InnerText == FoodItemCategory.Lunch.ToString())
                 {
-                    lunchItems += "<LI>" + name + "<BR>" + "<I>" + description + "</I><BR>" + currencyCode + price + "</LI>";
+                    lunchItems += addLineItem(name, description, currencyCode, price);
                 }
                 else if (node["category"].InnerText == FoodItemCategory.Dinner.ToString())
                 {
-                    dinnerItems += "<LI>" + name + "<BR>" + "<I>" + description + "</I><BR>" + currencyCode + price + "</LI>";
+                    dinnerItems += addLineItem(name, description, currencyCode, price);
                 }
                 else if (node["category"].InnerText == FoodItemCategory.Dessert.ToString())
                 {
-                    dessertItems += "<LI>" + name + "<BR>" + "<I>" + description + "</I><BR>" + currencyCode + price + "</LI>";
+                    dessertItems += addLineItem(name, description, currencyCode, price);
                 }
                 else
                 {
-                    sideItems += "<LI>" + name + "<BR>" + "<I>" + description + "</I><BR>" + currencyCode + price + "</LI>";
+                    sideItems += addLineItem(name, description, currencyCode, price);
                 }
             }
 
             if (!string.IsNullOrEmpty(breakfastItems))
             {
-                menuItems += "<H1>" + FoodItemCategory.Breakfast.ToString().ToUpper() + "</H1><UL>" + breakfastItems + "</UL>";
+                menuItems += addHeader(FoodItemCategory.Breakfast.ToString().ToUpper(), breakfastItems);
             }
             if (!string.IsNullOrEmpty(snackItems))
             {
-                menuItems += "<H1>" + FoodItemCategory.Snack.ToString().ToUpper() + "</H1><UL>" + snackItems + "</UL>";
+                menuItems += addHeader(FoodItemCategory.Snack.ToString().ToUpper(), snackItems);
             }
             if (!string.IsNullOrEmpty(appetizerItems))
             {
-                menuItems += "<H1>" + FoodItemCategory.Appetizer.ToString().ToUpper() + "</H1><UL>" + appetizerItems + "</UL>";
+                menuItems += addHeader(FoodItemCategory.Appetizer.ToString().ToUpper(), appetizerItems);
             }
             if (!string.IsNullOrEmpty(lunchItems))
             {
-                menuItems += "<H1>" + FoodItemCategory.Lunch.ToString().ToUpper() + "</H1><UL>"+ lunchItems + "</UL>";
+                menuItems += addHeader(FoodItemCategory.Lunch.ToString().ToUpper(), lunchItems);
             }
             if (!string.IsNullOrEmpty(dinnerItems))
             {
-                menuItems += "<H1>" + FoodItemCategory.Dinner.ToString().ToUpper() + "</H1><UL>" + dinnerItems + "</UL>";
+                menuItems += addHeader(FoodItemCategory.Dinner.ToString().ToUpper(), dinnerItems);
             }
             if (!string.IsNullOrEmpty(dessertItems))
             {
-                menuItems += "<H1>" + FoodItemCategory.Dessert.ToString().ToUpper() + "</H1><UL>" + dessertItems + "</UL>";
+                menuItems += addHeader(FoodItemCategory.Dessert.ToString().ToUpper(), dessertItems);
             }
             if (!string.IsNullOrEmpty(sideItems))
             {
-                menuItems += "<H1>" + FoodItemCategory.Side.ToString().ToUpper() + "</H1><UL>" + sideItems + "</UL>";
+                menuItems += addHeader(FoodItemCategory.Side.ToString().ToUpper(), sideItems);
             }
 
             using (StreamWriter sw = new StreamWriter("../../OutputFiles/" + fileName))
@@ -225,13 +237,25 @@ namespace CreationalPatternsProject
 
             return fileName;
         }
+
+        // Mehtod to add the line items
+        public string addLineItem(string name, string description, string currencyCode, string price)
+        {
+            return "<LI>" + name + "<BR>" + "<I>" + description + "</I><BR>" + currencyCode + price + "</LI>";
+        }
+
+        // Method to add the headers
+        public string addHeader(string heading, string category)
+        {
+            return "<H1>" + heading + "</H1><UL>" + category + "</UL>";
+        }
     }
 
 
     public class XmlMenuFormatter : IMenuFormatter
     {
         string outputPath = @"../../OutputFiles/";
-        string fileName = DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".xml";
+        string fileName = MenuSelection.Instance.Country.ToString() + MenuSelection.Instance.RestaurantCategory.ToString() + "Menu" + ".xml";
 
         public string generateMenu(string menu)
         {
@@ -266,44 +290,53 @@ namespace CreationalPatternsProject
                 string category = node["category"].InnerText;
                 string currencyCode = node["currencycode"].InnerText;
 
+                // Determine food category for the current node and add as a child node
                 if (node["category"].InnerText == FoodItemCategory.Breakfast.ToString())
                 {
-                    XmlNode menuItem = newXml.CreateNode(XmlNodeType.Element, "MenuItem", null);
+                    XmlNode menuItem = addNode(newXml, name, description, price, category, currencyCode);
+
                     breakfast.AppendChild(menuItem);
                     
                 }
                 else if (node["category"].InnerText == FoodItemCategory.Snack.ToString())
                 {
-                    XmlNode menuItem = newXml.CreateNode(XmlNodeType.Element, "MenuItem", null);
+                    XmlNode menuItem = addNode(newXml, name, description, price, category, currencyCode);
+
                     snack.AppendChild(menuItem);
                 }
                 else if (node["category"].InnerText == FoodItemCategory.Appetizer.ToString())
                 {
-                    XmlNode menuItem = newXml.CreateNode(XmlNodeType.Element, "MenuItem", null);
+                    XmlNode menuItem = addNode(newXml, name, description, price, category, currencyCode);
+
                     appetizer.AppendChild(menuItem);
                 }
                 else if (node["category"].InnerText == FoodItemCategory.Lunch.ToString())
                 {
-                    XmlNode menuItem = newXml.CreateNode(XmlNodeType.Element, "MenuItem", null);
+                    XmlNode menuItem = addNode(newXml, name, description, price, category, currencyCode);
+
                     lunch.AppendChild(menuItem);
                 }
                 else if (node["category"].InnerText == FoodItemCategory.Dinner.ToString())
                 {
-                    XmlNode menuItem = newXml.CreateNode(XmlNodeType.Element, "MenuItem", null);
+                    XmlNode menuItem = addNode(newXml, name, description, price, category, currencyCode);
+
                     dinner.AppendChild(menuItem);
                 }
                 else if (node["category"].InnerText == FoodItemCategory.Dessert.ToString())
                 {
-                    XmlNode menuItem = newXml.CreateNode(XmlNodeType.Element, "MenuItem", null);
+                    XmlNode menuItem = addNode(newXml, name, description, price, category, currencyCode);
+
                     dessert.AppendChild(menuItem);
                 }
                 else
                 {
-                    XmlNode menuItem = newXml.CreateNode(XmlNodeType.Element, "MenuItem", null);
+                    XmlNode menuItem = addNode(newXml, name, description, price, category, currencyCode);
+
                     side.AppendChild(menuItem);
                 }
             }
 
+            // If FoodItemCategory node has child nodes add it to root
             if (breakfast.HasChildNodes)
             {
                 root.AppendChild(breakfast);
@@ -333,10 +366,38 @@ namespace CreationalPatternsProject
                 root.AppendChild(side);
             }
 
+            // Write xml menu
             XmlTextWriter writer = new XmlTextWriter(outputPath + fileName, null);
             writer.Formatting = Formatting.Indented;
             newXml.Save(writer);
             return fileName;
+        }
+
+        // Method to add the food item in the required structure
+        public XmlNode addNode(XmlDocument newXml, string name, string description, string price, string category, string currencyCode)
+        {
+            // Create child nodes
+            XmlNode menuItem = newXml.CreateNode(XmlNodeType.Element, "MenuItem", null);
+            XmlNode itemName = newXml.CreateNode(XmlNodeType.Element, "Name", null);
+            XmlNode itemPrice = newXml.CreateNode(XmlNodeType.Element, "Price", null);
+            XmlNode itemCurrencyCode = newXml.CreateNode(XmlNodeType.Element, "CurrencyCode", null);
+            XmlNode itemAmount = newXml.CreateNode(XmlNodeType.Element, "Amount", null);
+            XmlNode itemDescription = newXml.CreateNode(XmlNodeType.Element, "Description", null);
+
+            // Add inner text
+            itemName.InnerText = name;
+            itemCurrencyCode.InnerText = currencyCode;
+            itemAmount.InnerText = price;
+            itemDescription.InnerText = description;
+
+            // Append nodes
+            itemPrice.AppendChild(itemCurrencyCode);
+            itemPrice.AppendChild(itemAmount);
+            menuItem.AppendChild(itemName);
+            menuItem.AppendChild(itemPrice);
+            menuItem.AppendChild(itemDescription);
+
+            return menuItem;
         }
     }
 }

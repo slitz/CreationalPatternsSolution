@@ -20,61 +20,58 @@ namespace CreationalPatternsProject
 
         private void generateMenuButton_Click(object sender, EventArgs e)
         {
+            string outputDirectory = @"../../OutputFiles/";
+
+            // Get selected country radio button and store value in MenuSelection class
             if (greatBritanRadioButton.Checked)
             {
-                MenuCombinations.Instance.Country = greatBritanRadioButton.Tag.ToString();
-                MenuCombinations.Instance.CurrencyCode = "GBP";
+                MenuSelection.Instance.Country = greatBritanRadioButton.Tag.ToString();
+                MenuSelection.Instance.CurrencyCode = "GBP";
             }
             else
             {
-                MenuCombinations.Instance.Country = unitedStatesRadioButton.Tag.ToString();
-                MenuCombinations.Instance.CurrencyCode = "$";
+                MenuSelection.Instance.Country = unitedStatesRadioButton.Tag.ToString();
+                MenuSelection.Instance.CurrencyCode = "$";
             }
 
+            // Get selected restaurant category radio button and store value in MenuSelection class
             if (dinerRadioButton.Checked)
             {
-                MenuCombinations.Instance.RestaurantCategory = dinerRadioButton.Text;
+                MenuSelection.Instance.RestaurantCategory = dinerRadioButton.Tag.ToString();
             }
             else if (eveningOnlyRadioButton.Checked)
             {
-                MenuCombinations.Instance.RestaurantCategory = eveningOnlyRadioButton.Text;
+                MenuSelection.Instance.RestaurantCategory = eveningOnlyRadioButton.Tag.ToString();
             }
             else
             {
-                MenuCombinations.Instance.RestaurantCategory = allDayRadioButton.Text;
+                MenuSelection.Instance.RestaurantCategory = allDayRadioButton.Tag.ToString();
             }
 
+            // Get selected format radio button and store value in MenuSelection class
             if (textRadioButton.Checked)
             {
-                MenuCombinations.Instance.MenuFormat = textRadioButton.Text;
+                MenuSelection.Instance.MenuFormat = textRadioButton.Text;
             }
             else if (htmlRadioButton.Checked)
             {
-                MenuCombinations.Instance.MenuFormat = htmlRadioButton.Text;
+                MenuSelection.Instance.MenuFormat = htmlRadioButton.Text;
             }
             else
             {
-                MenuCombinations.Instance.MenuFormat = xmlRadioButton.Text;
+                MenuSelection.Instance.MenuFormat = xmlRadioButton.Text;
             }
 
             // Create output directory if it does not exist
-            Directory.CreateDirectory("../../OutputFiles/");
+            Directory.CreateDirectory(outputDirectory);
 
-            RestaurantAbstractFactory absFactory = RestaurantTypeFactoryMaker.getFactory(MenuCombinations.Instance.Country, MenuCombinations.Instance.RestaurantCategory, MenuCombinations.Instance.MenuFormat);
-
-            //IReaderFactory readerFactory = new ReaderFactory();
-            //IMenuGeneratorFactory menuFactory = new MenuGeneratorFactory();
-            //IMenuFormatterFactory menuFormatterFactory = new MenuFormatterFactory();
-
-            //IReader reader = readerFactory.getReader(MenuCombinations.Instance.Country);
-            //IMenuGenerator generator = menuFactory.getGenerator(MenuCombinations.Instance.RestaurantCategory);
-            //IReader reader = absFactory.createReader();
-            
+            RestaurantAbstractFactory absFactory = RestaurantTypeFactoryMaker.getFactory(MenuSelection.Instance.Country, MenuSelection.Instance.RestaurantCategory, MenuSelection.Instance.MenuFormat);
+        
             IMenuFormatter formatter = absFactory.createMenuFormatter();
 
-            var menuFileName = formatter.generateMenu(absFactory.createMenuGenerator().generateMenuItems(absFactory.createReader().readFile(MenuCombinations.Instance.CurrencyCode), MenuCombinations.Instance.Country));
+            var menuFileName = formatter.generateMenu(absFactory.createMenuGenerator().generateMenuItems(absFactory.createReader().readFile(MenuSelection.Instance.CurrencyCode), MenuSelection.Instance.Country));
 
-            MessageBox.Show(menuFileName);
+            MessageBox.Show("File location: " + outputDirectory + menuFileName, "Menu Created");
             
         }
     }
